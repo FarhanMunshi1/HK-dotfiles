@@ -263,7 +263,7 @@ Rectangle {
         Image {
             id: powerImage
 
-            source: "/home/farhan/HollowKnightProject/LoginPage/HK/assets/power.png"
+            source: "assets/power.png"
             anchors.centerIn: parent
             fillMode: Image.PreserveAspectFit
             width: 55
@@ -291,7 +291,7 @@ Rectangle {
         Image {
             id: resartImage
 
-            source: "/home/farhan/HollowKnightProject/LoginPage/HK/assets/restart.png"
+            source: "assets/restart.png"
             anchors.centerIn: parent
             fillMode: Image.PreserveAspectFit
             width: 55
