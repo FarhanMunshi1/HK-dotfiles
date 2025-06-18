@@ -1,26 +1,4 @@
-/***************************************************************************
-* Copyright (c) 2013 Abdurrahman AVCI <abdurrahmanavci@gmail.com>
-*
-* Permission is hereby granted, free of charge, to any person
-* obtaining a copy of this software and associated documentation
-* files (the "Software"), to deal in the Software without restriction,
-* including without limitation the rights to use, copy, modify, merge,
-* publish, distribute, sublicense, and/or sell copies of the Software,
-* and to permit persons to whom the Software is furnished to do so,
-* subject to the following conditions:
-*
-* The above copyright notice and this permission notice shall be included
-* in all copies or substantial portions of the Software.
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-* OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-* THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR
-* OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
-* ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
-* OR OTHER DEALINGS IN THE SOFTWARE.
-*
-***************************************************************************/
+// Test command:    QT_QPA_PLATFORM=xcb XDG_SEAT=seat0 XDG_SESSION_TYPE=x11 sddm-greeter --test-mode --theme {Path to directory}
 
 import QtGraphicalEffects 1.15
 import QtQuick 2.0
@@ -31,25 +9,6 @@ import SddmComponents 2.0
 import "components"
 
 Rectangle {
-    // Button {
-    //     id: shutdownButton
-    //     anchors.bottom: parent.bottom
-    //     x: 1550
-    //     text: "&#xf011;"
-    //     onClicked: sddm.powerOff()
-    //     KeyNavigation.backtab: loginButton
-    //     KeyNavigation.tab: rebootButton
-    // }
-    // Button {
-    //     id: rebootButton
-    //     anchors.bottom: parent.bottom
-    //     x: 900
-    //     text: textConstants.reboot
-    //     onClicked: sddm.reboot()
-    //     KeyNavigation.backtab: shutdownButton
-    //     KeyNavigation.tab: name
-    // }
-
     id: container
 
     property int sessionIndex: session.index
@@ -81,8 +40,6 @@ Rectangle {
         }
     }
 
-    width: 640
-    height: 480
     LayoutMirroring.enabled: Qt.locale().textDirection == Qt.RightToLeft
     LayoutMirroring.childrenInherit: true
     Component.onCompleted: {
@@ -127,18 +84,16 @@ Rectangle {
     FontLoader {
         id: perpetua
 
-        source: "fonts/perpetua.ttf" // Relative path to your font
+        source: "fonts/perpetua.ttf"
     }
 
     Item {
         id: clock
 
-        anchors.right: parent.right
-        anchors.top: parent.top
-        anchors.topMargin: 200
-        anchors.rightMargin: 190
         width: 200
         height: 100
+        x: 1500
+        y: 200
 
         Text {
             id: clockLabel
@@ -167,12 +122,10 @@ Rectangle {
     Item {
         id: date
 
-        anchors.right: parent.right
-        anchors.top: parent.top
-        anchors.topMargin: 250
-        anchors.rightMargin: 190
         width: 200
         height: 100
+        x: 1500
+        y: 250
 
         Text {
             anchors.centerIn: parent
@@ -187,13 +140,13 @@ Rectangle {
     TextBox {
         id: username
 
-        width: 250
+        width: 300
         height: 30
         text: userModel.lastUser
         radius: 5
         font.pixelSize: 15
-        x: 1190
-        y: 350
+        x: 1450
+        y: 400
         KeyNavigation.backtab: rebootButton
         KeyNavigation.tab: password
         Keys.onPressed: {
@@ -207,12 +160,12 @@ Rectangle {
     PasswordBox {
         id: password
 
-        width: 250
+        width: 300
         height: 30
-        font.pixelSize: 14
+        font.pixelSize: 15
         radius: 5
-        x: 1190
-        y: 400
+        x: 1450
+        y: 450
         KeyNavigation.backtab: name
         KeyNavigation.tab: session
         Keys.onPressed: {
@@ -229,9 +182,9 @@ Rectangle {
         text: "Login"
         font.family: perpetua.name
         font.pixelSize: 16
-        width: 250
-        x: 1190
-        y: 450
+        width: 300
+        x: 1450
+        y: 500
         onClicked: sddm.login(username.text, password.text, sessionIndex)
         KeyNavigation.backtab: layoutBox
         KeyNavigation.tab: shutdownButton
@@ -244,9 +197,9 @@ Rectangle {
         id: session
 
         z: 100
-        x: 1190
-        y: 550
-        width: 250
+        x: 1450
+        y: 600
+        width: 300
         height: 30
         font.pixelSize: 14
         arrowIcon: "angle-down.png"
@@ -257,8 +210,8 @@ Rectangle {
     Item {
         width: 55
         height: 55
-        x: 1530
-        y: 830
+        x: 1820
+        y: 1000
 
         Image {
             id: powerImage
@@ -285,8 +238,8 @@ Rectangle {
     Item {
         width: 55
         height: 55
-        x: 1460
-        y: 831
+        x: 1750
+        y: 1000
 
         Image {
             id: resartImage
@@ -306,74 +259,6 @@ Rectangle {
             onExited: resartImage.opacity = 1
             KeyNavigation.backtab: loginButton
             KeyNavigation.tab: rebootButton
-        }
-
-    }
-
-    Rectangle {
-        id: content
-
-        anchors.fill: parent
-        color: "transparent"
-
-        Rectangle {
-            id: rectangle
-
-            color: "transparent"
-            //anchors.centerIn: parent
-            anchors.right: parent.right
-            anchors.top: parent.top
-            anchors.bottom: parent.bottom
-            width: Math.max(320, mainColumn.implicitWidth + 300)
-            height: Math.max(320, mainColumn.implicitHeight + 50)
-
-            Column {
-                id: mainColumn
-
-                anchors.centerIn: parent
-                spacing: 12
-
-                Row {
-                    property int btnWidth: Math.max(loginButton.implicitWidth, shutdownButton.implicitWidth, rebootButton.implicitWidth, 80) + 8
-
-                    spacing: 4
-                    anchors.horizontalCenter: parent.horizontalCenter
-                }
-
-                Row {
-                    // Column {
-                    //     z: 100
-                    //     width: parent.width * 1.3
-                    //     spacing: 4
-                    //     anchors.bottom: parent.bottom
-                    //     Text {
-                    //         id: lblSession
-                    //         width: parent.width
-                    //         text: textConstants.session
-                    //         wrapMode: TextEdit.WordWrap
-                    //         font.bold: true
-                    //         font.pixelSize: 12
-                    //     }
-                    //     ComboBox {
-                    //         id: session
-                    //         width: parent.width
-                    //         height: 30
-                    //         font.pixelSize: 14
-                    //         arrowIcon: "angle-down.png"
-                    //         model: sessionModel
-                    //         index: sessionModel.lastIndex
-                    //         KeyNavigation.backtab: password
-                    //         KeyNavigation.tab: layoutBox
-                    //     }
-                    // }
-
-                    spacing: 4
-                    width: parent.width / 2
-                    z: 100
-                }
-
-            }
-
         }
 
     }
