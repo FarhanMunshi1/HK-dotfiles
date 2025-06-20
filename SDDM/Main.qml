@@ -163,6 +163,7 @@ Rectangle {
         width: 300
         height: 30
         font.pixelSize: 15
+        focus: true
         radius: 5
         x: 1450
         y: 450
